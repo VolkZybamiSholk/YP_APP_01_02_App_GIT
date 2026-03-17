@@ -1,8 +1,9 @@
-# This is a basic workflow to help you get started with Actions
+   name: CI
 
-name: CI
-
-pull_request:
+   on:
+     push:
+       branches: [ "main" ]
+     pull_request:
        branches: [ "main" ]
 
    jobs:
@@ -30,4 +31,3 @@ pull_request:
            with:
              name: app-debug.apk
              path: app/build/outputs/apk/debug/app-debug.apk
-
