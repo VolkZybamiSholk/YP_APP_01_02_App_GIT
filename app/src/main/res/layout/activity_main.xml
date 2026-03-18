@@ -91,7 +91,7 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@color/purple_500"
-            android:text="Новая Нетология: 4 уровня карьеры" />
+            android:text="Уютное убежище книжных любителей" />
 
         <TextView
             android:id="@+id/link_url"
@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:textColor="@android:color/darker_gray"
-            android:text="netology.ru" />
+            android:text="TeaAndBooks.ru" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/actions"
@@ -117,7 +117,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_favorite"
+            android:src="@drawable/ic_like_border"
             android:contentDescription="@string/like_description"
             android:layout_marginEnd="16dp"
             app:tint="@color/purple_500" />
