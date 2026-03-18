@@ -2,4 +2,12 @@
     <string name="app_name">MyFirstApp</string>
     <string name="main_text">My First Application</string>
     <string name="student_info">Student: Vanukov\nGroup: 3.2Isip-2</string>
+    <string name="avatar_description">Avatar author</string>
+    <string name="menu_description">Menu</string>
+    <string name="like_description">Like</string>
+    <string name="share_description">Share</string>
+    <string name="views_description">Views</string>
+    <string name="main_text2">Привет, это новая Нетология! Когда-то Нетология начиналась с интенсивов по онлайн-маркетингу. Затем появились курсы по дизайну, разработке, аналитике и управлению. Мы растём сами и помогаем расти студентам: от новичков до уверенных профессионалов.Привет, это новая Нетология! Когда-то Нетология начиналась с интенсивов по онлайн-маркетингу. Затем появились курсы по дизайну, разработке, аналитике и управлению. Мы растём сами и помогаем расти студентам: от новичков до уверенных профессионалов.Привет, это новая Нетология! Когда-то Нетология начиналась с интенсивов по онлайн-маркетингу. Затем появились курсы по дизайну, разработке, аналитике и управлению. Мы растём сами и помогаем расти студентам: от новичков до уверенных профессионалов.</string>
+    <string name="main_text3">"Нетология. Университет интернет-профессий"</string>
+
 </resources>
