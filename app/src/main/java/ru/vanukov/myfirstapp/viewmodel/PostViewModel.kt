@@ -3,6 +3,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import ru.vanukov.myfirstapp.dto.Post
+import androidx.lifecycle.MutableLiveData
 import ru.vanukov.myfirstapp.repository.PostRepository
 import ru.vanukov.myfirstapp.repository.PostRepositoryInMemoryImpl
 
@@ -11,11 +12,60 @@ class PostViewModel : ViewModel() {
 
     private val repository: PostRepository = PostRepositoryInMemoryImpl()
 
+    // Пустой пост для создания нового
+    private val empty = Post(
+        id = 0,
+        author = "",
+        content = "",
+        published = ""
+    )
+
+    // Список всех постов
     val data: LiveData<List<Post>> = repository.getAll()
+
+    // Редактируемый пост
+    private val _edited = MutableLiveData(empty)
+    val edited: LiveData<Post> = _edited
+
+    // Флаг, показываем ли панель отмены
+    private val _editingMode = MutableLiveData(false)
+    val editingMode: LiveData<Boolean> = _editingMode
 
     fun likeById(id: Long) = repository.likeById(id)
 
     fun shareById(id: Long) = repository.shareById(id)
 
     fun increaseViews(id: Long) = repository.increaseViews(id)
+
+    fun removeById(id: Long) = repository.removeById(id)
+
+    fun save() {
+        _edited.value?.let { post ->
+            if (post.content.isNotBlank()) {
+                repository.save(post)
+            }
+        }
+        // Сбрасываем режим редактирования
+        _edited.value = empty
+        _editingMode.value = false
+    }
+
+    fun edit(post: Post) {
+        _edited.value = post
+        _editingMode.value = true
+    }
+
+    fun changeContent(content: String) {
+        val text = content.trim()
+        _edited.value?.let { post ->
+            if (post.content != text) {
+                _edited.value = post.copy(content = text)
+            }
+        }
+    }
+
+    fun cancelEdit() {
+        _edited.value = empty
+        _editingMode.value = false
+    }
 }

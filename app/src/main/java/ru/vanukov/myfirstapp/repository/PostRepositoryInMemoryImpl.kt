@@ -4,13 +4,24 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.vanukov.myfirstapp.R
 import ru.vanukov.myfirstapp.dto.Post
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
 class PostRepositoryInMemoryImpl : PostRepository {
 
-    // Теперь это список, а не один пост
+    // Счетчик для генерации ID
+    private var nextId = 5L
+
+    // Текущий пользователь (для демонстрации)
+    private val currentUserId = 1L
+    private val currentUserName = "Я"
+
     private var posts = listOf(
         Post(
             id = 1,
             author = "Уютное убежище",
+            authorId = 2,
             content = "Иногда самое лучшее место в мире находится между страниц любимой книги. Дождь за окном, плед, горячий чай и история, которая не отпускает до глубокой ночи.\\nА какая книга согревает вас этой осенью? Делитесь в комментариях!",
             published = "21 мая в 18:36",
             likedByMe = false,
@@ -21,20 +32,18 @@ class PostRepositoryInMemoryImpl : PostRepository {
         Post(
             id = 2,
             author = "Уютное убежище",
-            content = "Вышла новая книга! Наконец то дождались продолжения Гарри Потера",
-            published = "22 мая в 10:15",
+            authorId = 3,
+            content = "Вышла новая книга! Наконец то дождались продолжения Гарри Потера", published = "22 мая в 10:15",
             likedByMe = false,
             likes = 342,
             shares = 89,
             views = 2300
         ),
         Post(
-
-
             id = 3,
             author = "Уютное убежище",
-            content = "Скоро начнётся распродажа книг на нашем сайт, успейте купить по скидке книги.",
-            published = "23 мая в 09:42",
+            authorId = 4,
+            content = "Скоро начнётся распродажа книг на нашем сайт, успейте купить по скидке книги.",  published = "23 мая в 09:42",
             likedByMe = true,
             likes = 1250,
             shares = 420,
@@ -43,6 +52,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
         Post(
             id = 4,
             author = "Уютное убежище",
+            authorId = 5,
             content = "Анонсированы новые книги для заказа на нашем сайте. От наших авторов.",
             published = "20 мая в 20:00",
             likedByMe = false,
@@ -90,6 +100,44 @@ class PostRepositoryInMemoryImpl : PostRepository {
             }
         }
         _data.value = posts
+    }
+
+    override fun save(post: Post) {
+        if (post.id == 0L) {
+            // Создание нового поста
+            val newPost = post.copy(
+                id = nextId++,
+                author = currentUserName,
+                authorId = currentUserId,
+                published = formatDate(Date()),
+                likedByMe = false,
+                likes = 0,
+                shares = 0,
+                views = 0
+            )
+            posts = listOf(newPost) + posts
+        } else {
+            // Обновление существующего поста
+            posts = posts.map { existingPost ->
+                if (existingPost.id == post.id) {
+                    // Сохраняем автора, дату и счетчики, обновляем только контент
+                    existingPost.copy(content = post.content)
+                } else {
+                    existingPost
+                }
+            }
+        }
+        _data.value = posts
+    }
+
+    override fun removeById(id: Long) {
+        posts = posts.filter { it.id != id }
+        _data.value = posts
+    }
+
+    private fun formatDate(date: Date): String {
+        val format = SimpleDateFormat("d MMM в HH:mm", Locale("ru"))
+        return format.format(date)
     }
 }
 
