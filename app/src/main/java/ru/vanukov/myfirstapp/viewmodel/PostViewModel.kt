@@ -1,4 +1,5 @@
 package ru.vanukov.myfirstapp.viewmodel
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import ru.vanukov.myfirstapp.dto.Post
@@ -8,14 +9,13 @@ import ru.vanukov.myfirstapp.repository.PostRepositoryInMemoryImpl
 
 class PostViewModel : ViewModel() {
 
-    // Создаем экземпляр репозитория
     private val repository: PostRepository = PostRepositoryInMemoryImpl()
 
-    // Данные, доступные для наблюдения
-    val data: LiveData<Post> = repository.get()
+    val data: LiveData<List<Post>> = repository.getAll()
 
-    // Методы для вызова из Activity
-    fun like() = repository.like()
-    fun share() = repository.share()
-    fun increaseViews() = repository.increaseViews()
+    fun likeById(id: Long) = repository.likeById(id)
+
+    fun shareById(id: Long) = repository.shareById(id)
+
+    fun increaseViews(id: Long) = repository.increaseViews(id)
 }
