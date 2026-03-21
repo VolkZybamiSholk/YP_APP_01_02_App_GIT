@@ -68,4 +68,20 @@ class PostViewModel : ViewModel() {
         _edited.value = empty
         _editingMode.value = false
     }
+    fun saveEditedPost(postId: Long, newContent: String) {
+        // Получаем текущие данные о посте
+        val currentPosts = data.value ?: return
+        val existingPost = currentPosts.find { it.id == postId } ?: return
+
+        // Создаем обновленный пост с новым контентом
+        val updatedPost = existingPost.copy(content = newContent)
+
+        // Сохраняем через репозиторий
+        repository.save(updatedPost)
+
+        // Сбрасываем режим редактирования
+        _edited.value = empty
+        _editingMode.value = false
+    }
+
 }
